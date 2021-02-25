@@ -22,7 +22,7 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        File dir = new File("./src/com/veeam"); // /webapp
+        File dir = new File("./src/main/java/com/veeam"); // /webapp
         getDirectoryFileNames(dir, "");
     }
 
