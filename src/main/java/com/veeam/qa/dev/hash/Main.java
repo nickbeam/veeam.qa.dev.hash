@@ -1,8 +1,12 @@
 package com.veeam.qa.dev.hash;
 
 import com.veeam.qa.dev.hash.exception.ArgumentsException;
+import com.veeam.qa.dev.hash.model.Record;
 
-import java.io.File;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
     private static File inputFile;
@@ -30,6 +34,21 @@ public class Main {
 
     private static void readInputFile(File file) {
         //TODO implement read input file
+        Path path = Paths.get(inputFile.getAbsolutePath());
+        try {
+            BufferedReader reader = Files.newBufferedReader(path);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static Record parseString(String str) {
+        //TODO implement parse string
+        return null;
     }
 
     private static boolean isHashMatch(File file, Algorithm alg, String hash) {
