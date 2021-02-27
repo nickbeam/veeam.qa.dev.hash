@@ -4,10 +4,12 @@ import com.veeam.qa.dev.hash.exception.ArgumentsException;
 import com.veeam.qa.dev.hash.model.NullRecord;
 import com.veeam.qa.dev.hash.model.Record;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 
 public class Main {
     private static File inputFile;
@@ -68,12 +70,19 @@ public class Main {
         return file;
     }
 
-    private static boolean isHashMatch(File file, Algorithm alg, String hash) {
-        //TODO implement check hash file
-        return false;
+    private static boolean isHashMatch(Record record) {
+        String hex = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance(record.getAlgorithm().getName());
+            md.update(Files.readAllBytes(record.getFile().toPath()));
+            hex = DatatypeConverter.printHexBinary(md.digest());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return record.getHash().equalsIgnoreCase(hex);
     }
 
     private static void printResult(Record record) {
-        System.out.println(record.getFile().getName() + " " + record.getAlgorithm() + " " + record.getHash());
+        System.out.println(record.getFile().getName() + " " + (isHashMatch(record) ? "OK" : "FAIL"));
     }
 }
