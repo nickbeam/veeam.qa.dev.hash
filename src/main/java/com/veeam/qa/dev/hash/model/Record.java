@@ -10,12 +10,32 @@ public class Record {
     private Algorithm algorithm;
     private String hash;
 
+    public Record() {
+
+    }
+
     public Record(File file, Algorithm algorithm, String hash) {
         Objects.requireNonNull(file);
         Objects.requireNonNull(algorithm);
         this.file = file;
         this.algorithm = algorithm;
         this.hash = hash;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Algorithm getAlgorithm() {
+        return algorithm;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public boolean isNull() {
+        return false;
     }
 
     @Override
@@ -29,5 +49,14 @@ public class Record {
     @Override
     public int hashCode() {
         return Objects.hash(file, algorithm, hash);
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "file=" + file +
+                ", algorithm=" + algorithm +
+                ", hash='" + hash + '\'' +
+                '}';
     }
 }

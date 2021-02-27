@@ -1,6 +1,7 @@
 package com.veeam.qa.dev.hash;
 
 import com.veeam.qa.dev.hash.exception.ArgumentsException;
+import com.veeam.qa.dev.hash.model.NullRecord;
 import com.veeam.qa.dev.hash.model.Record;
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.nio.file.Paths;
 
 public class Main {
     private static File inputFile;
-    private static File dir;
+    private static String dir;
 
     public static void main(String[] args) {
         checkArgs(args);
@@ -26,20 +27,22 @@ public class Main {
             throw new ArgumentsException("Input file not found");
         }
         if (args.length == 1) {
-            dir = new File("./");
+            dir = "." + File.separator;
         } else {
-            dir = new File(args[1]);
+            dir = args[1] + File.separator;
         }
     }
 
     private static void readInputFile(File file) {
-        //TODO implement read input file
         Path path = Paths.get(inputFile.getAbsolutePath());
         try {
             BufferedReader reader = Files.newBufferedReader(path);
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                Record record = parseString(line);
+                if (!record.isNull()) {
+                    printResult(record);
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -47,8 +50,22 @@ public class Main {
     }
 
     private static Record parseString(String str) {
-        //TODO implement parse string
-        return null;
+        String[] arr = str.split(" ");
+        if (arr.length == 3) {
+            File file = strToFile(arr[0]);
+            if (file.isFile() && file.exists()) {
+                return new Record(file, Algorithm.valueOf(arr[1].toUpperCase()), arr[2]);
+            }
+        }
+        return new NullRecord();
+    }
+
+    private static File strToFile(String str) {
+        File file = new File(dir + str);
+        if (!file.exists() || file.isDirectory()) {
+            System.out.println(str + " NOT FOUND");
+        }
+        return file;
     }
 
     private static boolean isHashMatch(File file, Algorithm alg, String hash) {
@@ -56,8 +73,7 @@ public class Main {
         return false;
     }
 
-    private static boolean isFileExist(String str) {
-        //TODO implement check file exist
-        return false;
+    private static void printResult(Record record) {
+        System.out.println(record.getFile().getName() + " " + record.getAlgorithm() + " " + record.getHash());
     }
 }
