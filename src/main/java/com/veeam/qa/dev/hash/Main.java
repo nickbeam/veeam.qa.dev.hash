@@ -12,27 +12,26 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 
 public class Main {
-    private static File inputFile;
     private static String dir;
 
     public static void main(String[] args) {
-        checkArgs(args);
-        readInputFile(inputFile);
+        readInputFile(checkArgs(args));
     }
 
-    private static void checkArgs(String[] args) {
+    private static File checkArgs(String[] args) {
         if (args.length == 0 || args.length > 2) {
             throw new ArgumentsException("Wrong arguments");
         }
-        inputFile = new File(args[0]);
+        File inputFile = new File(args[0]);
         if (!inputFile.isFile()) {
             throw new ArgumentsException("Input file not found");
         }
         if (args.length == 1) {
-            dir = "." + File.separator;
+            dir = inputFile.getParent() + File.separator;
         } else {
             dir = args[1] + File.separator;
         }
+        return inputFile;
     }
 
     private static void readInputFile(File file) {
