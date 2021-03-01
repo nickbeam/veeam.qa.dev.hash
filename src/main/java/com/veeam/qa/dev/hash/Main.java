@@ -36,7 +36,7 @@ public class Main {
     }
 
     private static void readInputFile(File file) {
-        Path path = Paths.get(inputFile.getAbsolutePath());
+        Path path = Paths.get(file.getAbsolutePath());
         try {
             BufferedReader reader = Files.newBufferedReader(path);
             String line;
@@ -52,7 +52,7 @@ public class Main {
     }
 
     private static Record parseString(String str) {
-        String[] arr = str.split(" ");
+        String[] arr = str.trim().replaceAll(" +", " ").split(" ");
         if (arr.length == 3) {
             File file = strToFile(arr[0]);
             if (file.isFile() && file.exists()) {
@@ -79,10 +79,15 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+//        printHash(record, hex);
         return record.getHash().equalsIgnoreCase(hex);
     }
 
     private static void printResult(Record record) {
         System.out.println(record.getFile().getName() + " " + (isHashMatch(record) ? "OK" : "FAIL"));
+    }
+
+    private static void printHash(Record record, String hex) {
+        System.out.println(record.getFile().getName() + " - " + hex);
     }
 }
