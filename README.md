@@ -29,7 +29,6 @@ file_03.bin md5 6dc2d05c8374293fe20bc4c22c236e2e
 --------------
 `java -jar <jar file> <path to the input file> <path to the directory containing the files to check>`
 
-
 Пример вывода:
 --------------
 ```
