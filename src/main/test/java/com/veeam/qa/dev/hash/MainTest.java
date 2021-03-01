@@ -1,6 +1,5 @@
 package com.veeam.qa.dev.hash;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
 

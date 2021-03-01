@@ -78,15 +78,10 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-//        printHash(record, hex);
         return record.getHash().equalsIgnoreCase(hex);
     }
 
     private static void printResult(Record record) {
         System.out.println(record.getFile().getName() + " " + (isHashMatch(record) ? "OK" : "FAIL"));
-    }
-
-    private static void printHash(Record record, String hex) {
-        System.out.println(record.getFile().getName() + " - " + hex);
     }
 }
