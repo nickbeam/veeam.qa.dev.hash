@@ -47,4 +47,5 @@ file_03.bin NOT FOUND
 Установка и запуск:
 ----------
 1. Распакуйте архив (*распаковать здесь*) на диск `C:\`
-2. Выполните команду в консоли: `java -jar c:\tmp\hash-jar-with-dependencies.jar c:\tmp\import.txt c:\tmp\files`
+2. Выполните команду в консоли:  
+   `java -jar c:\tmp\hash-jar-with-dependencies.jar c:\tmp\import.txt c:\tmp\files`
