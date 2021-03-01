@@ -1,7 +1,6 @@
 .idea
 out
+target
+meta-inf
 *.iml
 log
-
-
-
